@@ -23,7 +23,7 @@ type EducationObjectType = {
   postGraduateDegree: string;
   postGraduateGPA: string;
 };
-type ExperienceObjectType = {
+export type ExperienceObjectType = {
   company_name: string;
   description: string;
   duration: {
@@ -32,13 +32,13 @@ type ExperienceObjectType = {
   };
   job_role: string;
 };
-type AwardObjectType = {
+export type AwardObjectType = {
   award_name: string;
   awarding_organization: string;
   date_of_achievement: string;
   description: string;
 };
-type CourseObjectType = {
+export type CourseObjectType = {
   course_name: string;
   organization: string;
   duration: {
@@ -47,7 +47,7 @@ type CourseObjectType = {
   };
   description: string;
 };
-type ProjectObjectType = {
+export type ProjectObjectType = {
   project_name: string;
   project_url: string;
   duration: {
@@ -60,7 +60,7 @@ type ProjectObjectType = {
 interface cvSchemaDataType extends Document {
   personalDetails: personalDetailsObjectType;
   education: EducationObjectType;
-  experiece: ExperienceObjectType[];
+  experience: ExperienceObjectType[];
   skills: string[];
   achievements: {
     awards: AwardObjectType[];
@@ -95,7 +95,7 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
       postGraduateDegree: { type: String },
       postGraduateGPA: { type: String },
     },
-    experiece: [
+    experience: [
       {
         company_name: { type: String, required: true },
         description: { type: String, required: true },
