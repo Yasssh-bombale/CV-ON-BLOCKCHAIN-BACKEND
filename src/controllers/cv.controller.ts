@@ -35,17 +35,17 @@ type PersonalDetailsType = {
 };
 
 type AchievementsObjectType = {
-  awards?: AwardObjectType[];
-  courses?: CourseObjectType[];
-  projects?: ProjectObjectType[];
+  awards?: AwardObjectType[] | [];
+  courses?: CourseObjectType[] | [];
+  projects?: ProjectObjectType[] | [];
 };
 
 // Main data type with personal details and education
 type DataToBeStoredType = {
   personalDetails: PersonalDetailsType;
   education: EducationType;
-  experience: ExperienceObjectType[];
-  skills: string[];
+  experience: ExperienceObjectType[] | [];
+  skills: string[] | [];
   achievements?: AchievementsObjectType;
   profile_summary: string;
 };
@@ -60,23 +60,23 @@ interface RequestBodyType {
   phoneNumber: string;
   Years_of_experience: string;
   profile_summary: string;
-  class10School: string;
+  class10SchoolName: string;
   class10Board: string;
   class10Grade: string;
-  class12College: string;
-  class12Board: string;
-  class12Grade: string;
-  underGraduateCollege: string;
-  underGraduateDegree: string;
-  underGraduateGPA: string;
-  postGraduateCollege: string;
-  postGraduateDegree: string;
-  postGraduateGPA: string;
-  Experience: ExperienceObjectType[]; // Experience is an array of objects
+  class12CollegeName?: string;
+  class12Board?: string;
+  class12Grade?: string;
+  underGraduateCollegeName?: string;
+  underGraduateDegree?: string;
+  underGraduateGPA?: string;
+  postGraduateCollegeName?: string;
+  postGraduateDegree?: string;
+  postGraduateGPA?: string;
+  Experience: ExperienceObjectType[] | []; // Experience is an array of objects
   Skills: string[];
-  Awards: AwardObjectType[];
-  Courses: CourseObjectType[];
-  Projects: ProjectObjectType[];
+  Awards: AwardObjectType[] | [];
+  Courses: CourseObjectType[] | [];
+  Projects: ProjectObjectType[] | [];
 }
 export const createCv = async (req: Request, res: Response) => {
   try {
@@ -89,16 +89,16 @@ export const createCv = async (req: Request, res: Response) => {
       phoneNumber,
       Years_of_experience,
       profile_summary,
-      class10School,
+      class10SchoolName,
       class10Board,
       class10Grade,
-      class12College,
+      class12CollegeName,
       class12Board,
       class12Grade,
-      underGraduateCollege,
+      underGraduateCollegeName,
       underGraduateDegree,
       underGraduateGPA,
-      postGraduateCollege,
+      postGraduateCollegeName,
       postGraduateDegree,
       postGraduateGPA,
       Experience,
@@ -167,22 +167,22 @@ export const createCv = async (req: Request, res: Response) => {
     // };
 
     // class10fields;
-    addEducationFields("class10School", class10School);
+    addEducationFields("class10School", class10SchoolName);
     addEducationFields("class10Board", class10Board);
     addEducationFields("class10Grade", class10Grade);
 
     // class12fields;
-    addEducationFields("class12College", class12College);
+    addEducationFields("class12College", class12CollegeName);
     addEducationFields("class12Board", class12Board);
     addEducationFields("class12Grade", class12Grade);
 
     // undergraduate fields;
-    addEducationFields("underGraduateCollege", underGraduateCollege);
+    addEducationFields("underGraduateCollege", underGraduateCollegeName);
     addEducationFields("underGraduateDegree", underGraduateDegree);
     addEducationFields("underGraduateGPA", underGraduateGPA);
 
     // postGraduate fields;
-    addEducationFields("postGraduateCollege", postGraduateCollege);
+    addEducationFields("postGraduateCollege", postGraduateCollegeName);
     addEducationFields("postGraduateDegree", postGraduateDegree);
     addEducationFields("postGraduateGPA", postGraduateGPA);
 

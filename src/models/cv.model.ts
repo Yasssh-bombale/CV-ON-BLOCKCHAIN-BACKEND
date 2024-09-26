@@ -12,16 +12,16 @@ type personalDetailsObjectType = {
 type EducationObjectType = {
   class10School: string;
   class10Board: string;
-  class10Grade: string;
+  class10Grade: Number;
   class12College: string;
   class12Board: string;
-  class12Grade: string;
+  class12Grade: Number;
   underGraduateCollege: string;
   underGraduateDegree: string;
-  underGraduateGPA: string;
+  underGraduateGPA: Number;
   postGraduateCollege: string;
   postGraduateDegree: string;
-  postGraduateGPA: string;
+  postGraduateGPA: Number;
 };
 export type ExperienceObjectType = {
   company_name: string;
@@ -84,16 +84,16 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
     education: {
       class10School: { type: String },
       class10Board: { type: String },
-      class10Grade: { type: String },
+      class10Grade: { type: Number },
       class12College: { type: String },
       class12Board: { type: String },
-      class12Grade: { type: String },
+      class12Grade: { type: Number },
       underGraduateCollege: { type: String },
       underGraduateDegree: { type: String },
-      underGraduateGPA: { type: String },
+      underGraduateGPA: { type: Number },
       postGraduateCollege: { type: String },
       postGraduateDegree: { type: String },
-      postGraduateGPA: { type: String },
+      postGraduateGPA: { type: Number },
     },
     experience: [
       {
