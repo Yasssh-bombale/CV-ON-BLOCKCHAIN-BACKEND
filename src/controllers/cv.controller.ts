@@ -67,10 +67,10 @@ interface RequestBodyType {
   class12Board?: string;
   class12Grade?: string;
   underGraduateCollegeName?: string;
-  underGraduateDegree?: string;
+  underGraduateDegreeName?: string;
   underGraduateGPA?: string;
   postGraduateCollegeName?: string;
-  postGraduateDegree?: string;
+  postGraduateDegreeName?: string;
   postGraduateGPA?: string;
   Experience: ExperienceObjectType[] | []; // Experience is an array of objects
   Skills: string[];
@@ -96,10 +96,10 @@ export const createCv = async (req: Request, res: Response) => {
       class12Board,
       class12Grade,
       underGraduateCollegeName,
-      underGraduateDegree,
+      underGraduateDegreeName,
       underGraduateGPA,
       postGraduateCollegeName,
-      postGraduateDegree,
+      postGraduateDegreeName,
       postGraduateGPA,
       Experience,
       Skills,
@@ -178,12 +178,12 @@ export const createCv = async (req: Request, res: Response) => {
 
     // undergraduate fields;
     addEducationFields("underGraduateCollege", underGraduateCollegeName);
-    addEducationFields("underGraduateDegree", underGraduateDegree);
+    addEducationFields("underGraduateDegree", underGraduateDegreeName);
     addEducationFields("underGraduateGPA", underGraduateGPA);
 
     // postGraduate fields;
     addEducationFields("postGraduateCollege", postGraduateCollegeName);
-    addEducationFields("postGraduateDegree", postGraduateDegree);
+    addEducationFields("postGraduateDegree", postGraduateDegreeName);
     addEducationFields("postGraduateGPA", postGraduateGPA);
 
     if (Experience.length > 0) {
@@ -220,5 +220,20 @@ export const createCv = async (req: Request, res: Response) => {
   } catch (error) {
     console.log("ERROR:IN CREATE-CV CONTROLLER", error);
     res.status(500).json("ERROR:IN CREATE-CV CONTROLLER");
+  }
+};
+
+export const getCv = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const cv = await CV.findById(id);
+    if (!cv) {
+      return res.status(404).json("No CV Found!");
+    }
+
+    return res.status(200).json(cv);
+  } catch (error) {
+    console.log("ERROR:GET_CV_CONTROLLER", error);
+    res.status(500).json("ERROR:GET_CV_CONTROLLER");
   }
 };
