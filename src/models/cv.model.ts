@@ -1,4 +1,14 @@
 import mongoose, { Document, Schema } from "mongoose";
+import {
+  AwardVerificationType,
+  CourseVerificationType,
+  EducationVerificationsType,
+  ExperienceVerificationsType,
+  PersonalVerificationsType,
+  ProfileSummaryVerificationType,
+  ProjectVerificationType,
+  SkillsVerificationType,
+} from "../types/verifications.types";
 
 type personalDetailsObjectType = {
   name: string;
@@ -68,6 +78,15 @@ interface cvSchemaDataType extends Document {
     projects: ProjectObjectType[];
   };
   profile_summary: string;
+  // verifications;
+  personalDetailsVerification: PersonalVerificationsType;
+  educationVerifications: EducationVerificationsType;
+  experienceVerifications: ExperienceVerificationsType;
+  skillsVerifications: SkillsVerificationType;
+  awardVerifications: AwardVerificationType;
+  courseVerifications: CourseVerificationType;
+  projectsVerifications: ProjectVerificationType;
+  profileSummaryVerification: ProfileSummaryVerificationType;
 }
 
 const CvSchema: Schema<cvSchemaDataType> = new Schema(
@@ -142,6 +161,180 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
       ],
     },
     profile_summary: { type: String, required: true },
+    // verifications;
+
+    // step 1;
+    personalDetailsVerification: {
+      name: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      email: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      location: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      profession: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      imageUrl: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      phoneNumber: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    },
+    // step 2;
+    educationVerifications: {
+      class10: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+      class12: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+      undergraduation: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+      postgraduation: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+    },
+    // step 3;
+    experienceVerifications: {
+      type: Map,
+      of: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+    },
+    // step 4;
+    skillsVerifications: {
+      type: Map,
+      of: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+    },
+    // step 5;
+    //awards verification
+    awardVerifications: {
+      type: Map,
+      of: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+    },
+    //course verification
+    courseVerifications: {
+      type: Map,
+      of: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+    },
+    //project verification
+    projectsVerifications: {
+      type: Map,
+      of: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+        proof: {
+          type: [String],
+          default: [],
+        },
+        // TODO: mail status;
+      },
+    },
+
+    // step 6 profile summary;
+    profileSummaryVerification: {
+      profile_summary: {
+        isSelfAttested: {
+          type: Boolean,
+          default: false,
+        },
+      },
+    },
   },
   { timestamps: true }
 );

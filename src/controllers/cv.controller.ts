@@ -6,7 +6,16 @@ import {
   ExperienceObjectType,
   ProjectObjectType,
 } from "../models/cv.model";
-
+import {
+  AwardVerificationType,
+  CourseVerificationType,
+  EducationVerificationsType,
+  ExperienceVerificationsType,
+  PersonalVerificationsType,
+  ProfileSummaryVerificationType,
+  ProjectVerificationType,
+  SkillsVerificationType,
+} from "../types/verifications.types";
 // Define the type for education object
 type EducationType = {
   class10School?: string;
@@ -48,6 +57,16 @@ type DataToBeStoredType = {
   skills: string[] | [];
   achievements?: AchievementsObjectType;
   profile_summary: string;
+  // verifications;
+  // verifications;
+  personalDetailsVerification?: PersonalVerificationsType;
+  educationVerifications?: EducationVerificationsType;
+  experienceVerifications?: ExperienceVerificationsType;
+  skillsVerifications?: SkillsVerificationType;
+  awardVerifications?: AwardVerificationType;
+  courseVerifications?: CourseVerificationType;
+  projectsVerifications?: ProjectVerificationType;
+  profileSummaryVerification?: ProfileSummaryVerificationType;
 };
 
 // requestbody type;
@@ -77,6 +96,15 @@ interface RequestBodyType {
   Awards: AwardObjectType[] | [];
   Courses: CourseObjectType[] | [];
   Projects: ProjectObjectType[] | [];
+  // verifications;
+  personalDetailsVerification: PersonalVerificationsType;
+  educationVerifications: EducationVerificationsType;
+  experienceVerifications: ExperienceVerificationsType;
+  skillsVerifications: SkillsVerificationType;
+  awardVerifications: AwardVerificationType;
+  courseVerifications: CourseVerificationType;
+  projectsVerifications: ProjectVerificationType;
+  profileSummaryVerification: ProfileSummaryVerificationType;
 }
 export const createCv = async (req: Request, res: Response) => {
   try {
@@ -106,6 +134,15 @@ export const createCv = async (req: Request, res: Response) => {
       Awards,
       Courses,
       Projects,
+      //verifications
+      personalDetailsVerification,
+      educationVerifications,
+      experienceVerifications,
+      skillsVerifications,
+      awardVerifications,
+      courseVerifications,
+      projectsVerifications,
+      profileSummaryVerification,
     } = req.body as RequestBodyType;
 
     if (
@@ -139,6 +176,15 @@ export const createCv = async (req: Request, res: Response) => {
       experience: [],
       skills: [],
       profile_summary,
+      // verifications;
+      personalDetailsVerification,
+      educationVerifications,
+      experienceVerifications,
+      skillsVerifications,
+      awardVerifications,
+      courseVerifications,
+      projectsVerifications,
+      profileSummaryVerification,
     };
 
     const addEducationFields = (
