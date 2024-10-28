@@ -1,5 +1,5 @@
 {
   "version": 2,
-  "builds": [{ "src": "/dist", "use": "@vercel/node" }],
-  "rewrites": [{ "source": "/(.*)", "destination": "/dist" }]
+  "builds": [{ "src": "/", "use": "@vercel/node" }],
+  "rewrites": [{ "source": "/dist", "destination": "./dist" }]
 }
