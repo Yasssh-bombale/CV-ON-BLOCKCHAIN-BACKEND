@@ -51,6 +51,7 @@ type AchievementsObjectType = {
 
 // Main data type with personal details and education
 type DataToBeStoredType = {
+  nanoId: string;
   personalDetails: PersonalDetailsType;
   education: EducationType;
   experience: ExperienceObjectType[] | [];
@@ -71,6 +72,7 @@ type DataToBeStoredType = {
 
 // requestbody type;
 interface RequestBodyType {
+  nanoId: string;
   name: string;
   email: string;
   location: string;
@@ -109,6 +111,7 @@ interface RequestBodyType {
 export const createCv = async (req: Request, res: Response) => {
   try {
     const {
+      nanoId,
       name,
       email,
       location,
@@ -163,6 +166,7 @@ export const createCv = async (req: Request, res: Response) => {
     }
 
     let dataToBeStored: DataToBeStoredType = {
+      nanoId,
       personalDetails: {
         name,
         email,
@@ -283,3 +287,311 @@ export const getCv = async (req: Request, res: Response) => {
     res.status(500).json("ERROR:GET_CV_CONTROLLER");
   }
 };
+// export const verifyDoc = async (req:Request, res:Response) => {
+//   try {
+//     const { pinataHash } = req.params;
+//     const response = await axios.get(
+//       https://${process.env.pinataGateway}/ipfs/${pinataHash},
+//       { responseType: "arraybuffer" }
+//     );
+
+//     const contentType = response.headers["content-type"];
+
+//     if (contentType.includes("text/html")) {
+//       const html = response.data;
+//       const $ = cheerio.load(html);
+//       let pdfLinkText = null;
+
+//       // Search for PDF links in the HTML
+//       $("a").each((index, element) => {
+//         const link = $(element).attr("href");
+//         if (link && link.endsWith(".pdf")) {
+//           pdfLinkText = $(element).text();
+//           return false; // Stop after finding the first match
+//         }
+//       });
+
+//       console.log(pdfLinkText);
+
+//       // If a PDF link is found, fetch the PDF data
+//       if (pdfLinkText) {
+//         const pdfData = await axios.get(
+//           https://${process.env.pinataGateway}/ipfs/${pinataHash}/${pdfLinkText},
+//           { responseType: "arraybuffer" }
+//         );
+//         const base64Pdf = Buffer.from(pdfData.data, "binary").toString(
+//           "base64"
+//         );
+
+//         // Serve HTML with embedded PDF
+//         const htmlContent = `
+//             <!DOCTYPE html>
+//             <html lang="en">
+//                 <head>
+//                     <meta charset="UTF-8">
+//                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//                     <title>Edubuk</title>
+//                     <style>
+
+//                         .container
+//                             {
+//                                 display: flex;
+//                                 flex-direction:column;
+//                                 justify-content: center;
+//                                 align-items: center;
+//                                 text-align: center;
+//                                 row-gap: 10px;
+//                                 width: 100dvw;
+//                                 height: 100dvh;
+//                             }
+//                         h1 {
+//                                 text-align: center;
+//                                 align-items: center;
+//                                 color: #006666;
+//                             }
+
+//                         .btn
+//                             {
+//                                 display: flex;
+//                                 justify-content: center;
+//                                 align-items: center;
+//                                 text-align: center;
+//                                 gap: 10px;
+//                             }
+//                         button
+//                             {
+//                                 padding: 20px 30px;
+//                                 border: none;
+//                                 border-radius: 8px;
+//                                 font-size: 20px;
+//                                 cursor:pointer;
+//                             }
+//                             iframe{
+//                         width:100%;
+//                         height:100%;
+//                         border:none;
+//                         }
+
+//                         #approve
+//                             {
+//                                 color:green
+//                             }
+//                         #reject
+//                             {
+//                                 color:red
+//                             }
+//                     </style>
+//                 </head>
+//                 <body>
+//                     <div class='container'>
+//                     <h1>Verify Certificate</h1>
+//                     <div class='btn'>
+//                             <button id='approve'>Approve</button>
+//                             <button id='reject'>Reject</button>
+//                         </div>
+//                         <iframe src="data:application/pdf;base64,${base64Pdf}" width="100%" style="border:none;"></iframe>
+//                     </div>
+//                 </body>
+//             </html>
+//                 `;
+//         res.setHeader("Content-Type", "text/html");
+//         res.send(htmlContent);
+//       }
+//     } else if (contentType.includes("application/pdf")) {
+//       // If it's directly a PDF, embed it in HTML
+//       const base64Pdf = Buffer.from(response.data, "binary").toString("base64");
+
+//       const htmlContent = `
+//             <!DOCTYPE html>
+//             <html lang="en">
+//                 <head>
+//                     <meta charset="UTF-8">
+//                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//                     <title>Edubuk</title>
+//                     <style>
+
+//                         .container
+//                             {
+//                                 display: flex;
+//                                 flex-direction:column;
+//                                 justify-content: center;
+//                                 align-items: center;
+//                                 text-align: center;
+//                                 row-gap: 20px;
+//                                 width: 100%;
+//                                 height: auto;
+//                             }
+//                         h1 {
+//                                 text-align: center;
+//                                 align-items: center;
+//                                 color: #006666;
+//                             }
+
+//                         .btn
+//                             {
+//                                 display: flex;
+//                                 justify-content: center;
+//                                 align-items: center;
+//                                 text-align: center;
+//                                 gap: 20px;
+//                             }
+//                         button
+//                             {
+//                                 padding: 15px 30px;
+//                                 border: 1px solid #ccc;
+//                                 border-radius: 8px;
+//                                 font-size: 20px;
+//                                 cursor:pointer;
+//                                 margin:10px 0px;
+//                             }
+//                         button:hover
+//                         {
+//                         background-color:white;
+//                         border:1px solid #006666;
+//                         }
+//                         button:active
+//                         {
+//                         transform:translateY(2px);
+//                         }
+
+//                         iframe{
+//                         width:100%;
+//                         height:100vh;
+//                         border:none;
+//                         }
+
+//                         #approve
+//                             {
+//                                 color:green
+//                             }
+//                         #reject
+//                             {
+//                                 color:red
+//                             }
+//                     </style>
+//                 </head>
+//                 <body>
+//                     <div class='container'>
+//                       <h1>Verify Certificate</h1>
+//                         <div class='btn'>
+//                             <button id='approve'>Approve</button>
+//                             <button id='reject'>Reject</button>
+//                         </div>
+//                         <iframe src="data:application/pdf;base64,${base64Pdf}" ></iframe>
+//                     </div>
+//                 </body>
+//             </html>
+//                 `;
+//       res.setHeader("Content-Type", "text/html");
+//       res.send(htmlContent);
+//     } else if (
+//       contentType.includes("image/png") ||
+//       contentType.includes("image/jpeg") ||
+//       contentType.includes("image/jpg")
+//     ) {
+//       const base64Image = Buffer.from(response.data, "binary").toString(
+//         "base64"
+//       );
+//       const imgSrc = data:${contentType};base64,${base64Image};
+
+//       // Generate HTML with the embedded image
+//       const htmlContent = `
+//             <!DOCTYPE html>
+//             <html lang="en">
+//                 <head>
+//                     <meta charset="UTF-8">
+//                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//                     <title>Edubuk</title>
+//                     <style>
+
+//                         .container
+//                             {
+//                                 display: flex;
+//                                 flex-direction:column;
+//                                 justify-content: center;
+//                                 align-items: center;
+//                                 text-align: center;
+//                                 row-gap: 20px;
+//                                 width: 100%;
+//                                 height: auto;
+//                                 padding:10px;;
+//                             }
+//                         h1 {
+//                                 text-align: center;
+//                                 align-items: center;
+//                                 color: #006666;
+//                             }
+
+//                         .btn
+//                             {
+//                                 display: flex;
+//                                 justify-content: center;
+//                                 align-items: center;
+//                                 text-align: center;
+//                                 gap: 20px;
+//                             }
+//                         button
+//                             {
+//                                 padding: 15px 30px;
+//                                 border: 1px solid #ccc;
+//                                 border-radius: 8px;
+//                                 font-size: 20px;
+//                                 cursor:pointer;
+//                                 margin:10px 0px;
+//                             }
+//                         button:hover
+//                         {
+//                         background-color:white;
+//                         border:1px solid #006666;
+//                         }
+
+//                         img {
+//                             align-items:center;
+//                             max-width: 90%; /* Scale image to fit the viewport width */
+//                             max-height: 100%; /* Scale image to fit the viewport height */
+//                             width: auto; /* Maintain aspect ratio */
+//                             height: auto; /* Maintain aspect ratio */
+//                             object-fit: contain; /* Ensures the image is scaled without cropping */
+//                             border:1px solid #ccc;
+//                             border-radius:0.2rem;
+//                         }
+//                         #approve
+//                             {
+//                                 color:green
+//                             }
+//                         #reject
+//                             {
+//                                 color:red
+//                             }
+//                     </style>
+//                 </head>
+//                 <body>
+//                     <div class='container'>
+//                         <h1>Verify Certificate</h1>
+//                         <div class='btn'>
+//                         <button id='approve'>Approve</button>
+//                         <button id='reject'>Reject</button>
+//                         </div>
+//                         <img src="${imgSrc}" alt="Embedded Image" style="max-width: 100%; height: auto;" />
+//                     </div>
+//                 </body>
+//             </html>
+//                 `;
+//       res.setHeader("Content-Type", "text/html");
+//       res.send(htmlContent);
+//     } else {
+//       // Handle unsupported content types
+//       console.log("Unsupported content type", contentType);
+//       res.status(415).send({
+//         success: false,
+//         message: "Unsupported content type",
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).send({
+//       success: false,
+//       message: "Error while getting user data",
+//       error,
+//     });
+//   }
+// };

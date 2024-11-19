@@ -68,6 +68,7 @@ export type ProjectObjectType = {
 };
 
 interface cvSchemaDataType extends Document {
+  nanoId: string;
   personalDetails: personalDetailsObjectType;
   education: EducationObjectType;
   experience: ExperienceObjectType[];
@@ -88,9 +89,18 @@ interface cvSchemaDataType extends Document {
   projectsVerifications: ProjectVerificationType;
   profileSummaryVerification: ProfileSummaryVerificationType;
 }
-
+enum statusType {
+  pending = "pending",
+  approved = "approved",
+  rejected = "rejected",
+}
 const CvSchema: Schema<cvSchemaDataType> = new Schema(
   {
+    nanoId: {
+      type: String,
+      required: true,
+    },
+    // adding nano id;
     personalDetails: {
       name: { type: String, required: true },
       email: { type: String, required: true },
@@ -214,6 +224,11 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
+        mailStatus: {
+          type: String,
+          enum: Object.values(statusType),
+          default: statusType.pending,
+        },
       },
       class12: {
         isSelfAttested: {
@@ -225,6 +240,11 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
+        mailStatus: {
+          type: String,
+          enum: Object.values(statusType),
+          default: statusType.pending,
+        },
       },
       undergraduation: {
         isSelfAttested: {
@@ -236,6 +256,11 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
+        mailStatus: {
+          type: String,
+          enum: Object.values(statusType),
+          default: statusType.pending,
+        },
       },
       postgraduation: {
         isSelfAttested: {
@@ -247,6 +272,11 @@ const CvSchema: Schema<cvSchemaDataType> = new Schema(
           default: [],
         },
         // TODO: mail status;
+        mailStatus: {
+          type: String,
+          enum: Object.values(statusType),
+          default: statusType.pending,
+        },
       },
     },
     // step 3;
